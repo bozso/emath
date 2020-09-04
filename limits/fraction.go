@@ -1,4 +1,4 @@
-package math
+package limits
 
 import (
     "fmt"
