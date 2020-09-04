@@ -18,7 +18,7 @@ func NewFloatLimiter(min, max float64) (f FloatLimiter) {
 }
 
 func (f FloatLimiter) InRangeErr(val float64) (err error) {
-    if !f.InRange() {
+    if !f.InRange(val) {
         err = NotInRange{f:f, val: val}
     }
     return
@@ -53,11 +53,11 @@ var (
 )
 
 func ValidatePercent(val float64) (err error) {
-    return percentLimiter.InRange(val)
+    return percentLimiter.InRangeErr(val)
 }
 
 func ValidateFraction(val float64) (err error) {
-    return fractionLimiter.InRange(val)
+    return fractionLimiter.InRangeErr(val)
 }
 
 type NotInRange struct {
