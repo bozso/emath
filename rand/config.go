@@ -8,7 +8,7 @@ import (
 type Source rand.Source
 
 // wrapper for the rand package NewSource function
-func NewSource(seed uint64) (s Source) {
+func NewSource(seed int64) (s Source) {
     s = Source(rand.NewSource(seed))
     return
 }
@@ -53,8 +53,8 @@ type Rand struct {
 }
 
 // Create a new Rand struct with configuration defined by Config.
-func (s Scale) New(s rand.Source) (r Rand) {
-    r.scaler, r.Rand = s, rand.New(s)
+func (sc Scale) New(s rand.Source) (r Rand) {
+    r.scaler, r.Rand = sc, rand.New(s)
     return
 }
 
@@ -76,7 +76,7 @@ func (r Rand) Int() (i int) {
 // Returns a copy of the default configuration with zero mean and 1.0
 // standard deviation.
 func DefaultScale() (s Scale) {
-    return defaultConfig
+    return defaultScale
 }
 
 var defaultScale = Scale{
@@ -85,6 +85,6 @@ var defaultScale = Scale{
 }
 
 // Create a new random number generator with the default configuration.
-func Default(s rand.Source) (r Rand) {
+func NoScale(s rand.Source) (r Rand) {
     return defaultScale.New(s)
 }
